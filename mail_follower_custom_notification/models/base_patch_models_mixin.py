@@ -46,7 +46,7 @@ class BasePatchModelsMixin(models.AbstractModel):
                 our_class = my_bases[i - 1]
                 parent_class = my_bases[i + 1]
         inherit = [self._inherit]\
-            if isinstance(self._inherit, basestring) else self._inherit
+            if isinstance(self._inherit, str) else self._inherit
         for i in range(len(my_bases) - 1, 0, -1):
             # this can be different from the above if our mixin is used
             # multiple times on the same model
@@ -63,7 +63,7 @@ class BasePatchModelsMixin(models.AbstractModel):
                 'ignoring', self._name)
             return
 
-        for model_name, model_object in self.pool.models.iteritems():
+        for model_name, model_object in self.pool.models.items():
             if not isinstance(model_object, parent_class):
                 continue
             if isinstance(model_object, our_class):

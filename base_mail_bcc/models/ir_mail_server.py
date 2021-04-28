@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 # © 2014-2017 Thomas Rehn (initOS GmbH)
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl).
-from email.Utils import COMMASPACE
+from email.utils import COMMASPACE
 
 from openerp import models, api
 

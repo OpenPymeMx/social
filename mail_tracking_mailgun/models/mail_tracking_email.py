@@ -115,7 +115,7 @@ class MailTrackingEmail(models.Model):
             'ua_type': 'client-type',
             'url': 'url',
         }
-        for k, v in mapping.iteritems():
+        for k, v in mapping.items():
             if event.get(v, False):
                 metadata[k] = event[v]
         # Special field mapping

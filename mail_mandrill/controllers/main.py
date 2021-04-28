@@ -41,7 +41,7 @@ class MailController(http.Controller):
         if not url:
             url = request.httprequest.url_root.rstrip('/') + '/mandrill/event'
         data = url
-        kw_keys = kw.keys()
+        kw_keys = list(kw.keys())
         if kw_keys:
             kw_keys.sort()
             for kw_key in kw_keys:

@@ -21,7 +21,7 @@ class EmailTemplate(models.Model):
         this = self.browse(template_id)
         for record_id, this in self.get_email_template_batch(
             template_id, res_ids
-        ).iteritems():
+        ).items():
             if this.body_type == 'qweb' and\
                     (not fields or 'body_html' in fields):
                 for record in self.env[this.model].browse(record_id):

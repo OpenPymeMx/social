@@ -4,8 +4,8 @@
 # For copyright and license notices, see __openerp__.py file in root directory
 ##############################################################################
 
-import urlparse
-import urllib
+import urllib.parse
+import urllib.request, urllib.parse, urllib.error
 from openerp import api, models
 from openerp.tools.translate import _
 
@@ -33,10 +33,10 @@ class MailMail(models.Model):
             del params["token"]
 
         # Generate URL
-        url = urlparse.urljoin(
+        url = urllib.parse.urljoin(
             base_url, 'mail/mailing/%(mailing_id)s/unsubscribe?%(params)s' % {
                 'mailing_id': mail.mailing_id.id,
-                'params': urllib.urlencode(params),
+                'params': urllib.parse.urlencode(params),
             }
         )
         html = ''

@@ -3,7 +3,7 @@
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl.html).
 
 import logging
-import urlparse
+import urllib.parse
 import time
 import re
 from datetime import datetime
@@ -186,7 +186,7 @@ class MailTrackingEmail(models.Model):
                 'db': self.env.cr.dbname,
                 'tracking_email_id': self.id,
             })
-        track_url = urlparse.urljoin(base_url, path_url)
+        track_url = urllib.parse.urljoin(base_url, path_url)
         return (
             '<img src="%(url)s" alt="" '
             'data-odoo-tracking-email="%(tracking_email_id)s"/>' % {

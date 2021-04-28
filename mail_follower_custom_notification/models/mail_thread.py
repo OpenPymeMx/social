@@ -20,13 +20,13 @@ class MailThread(models.AbstractModel):
         ])
         for follower in self.env['mail.followers'].search([
             ('res_model', '=', self._name),
-            ('res_id', 'in', result.keys()),
+            ('res_id', 'in', list(result.keys())),
             ('partner_id', '=', user_pid or self.env.user.partner_id.id),
         ]):
             # values are ordered dicts, so we get the correct matches
             for subtype, data in zip(
                     subtypes,
-                    result[follower.res_id]['message_subtype_data'].values()):
+                    list(result[follower.res_id]['message_subtype_data'].values())):
                 data['force_mail'] = 'default'
                 if subtype in follower.force_mail_subtype_ids:
                     data['force_mail'] = 'force_yes'
@@ -40,12 +40,12 @@ class MailThread(models.AbstractModel):
     def message_custom_notification_update_user(self, custom_notifications):
         """change custom_notifications from user ids to partner ids"""
         user2partner = dict(
-            self.env['res.users'].browse(map(int, custom_notifications.keys()))
+            self.env['res.users'].browse(map(int, list(custom_notifications.keys())))
             .mapped(lambda user: (str(user.id), str(user.partner_id.id)))
         )
         return self.message_custom_notification_update({
             user2partner[user_id]: data
-            for user_id, data in custom_notifications.iteritems()
+            for user_id, data in custom_notifications.items()
         })
 
     @api.multi
@@ -56,18 +56,18 @@ class MailThread(models.AbstractModel):
         def ids_with_value(data, key, value):
             return map(lambda x: int(x[0]),
                        filter(lambda x: x[1][key] == value,
-                              data.iteritems()))
+                              iter(data.items())))
 
         custom_notifications = {
             int(key): value
-            for key, value in custom_notifications.iteritems()
+            for key, value in custom_notifications.items()
             if key != 'False'
         }
 
         for follower in self.env['mail.followers'].search([
             ('res_model', '=', self._name),
             ('res_id', 'in', self.ids),
-            ('partner_id', 'in', custom_notifications.keys()),
+            ('partner_id', 'in', list(custom_notifications.keys())),
         ]):
             data = custom_notifications[follower.partner_id.id]
             follower.write({

@@ -37,7 +37,7 @@ class TestMailMail(TransactionCase):
             self.base_url,
             'mail/mailing/%(mailing_id)s/unsubscribe?%(params)s' % {
                 'mailing_id': expect[0].mailing_id.id,
-                'params': urllib.urlencode(),
+                'params': urllib.parse.urlencode(),
             }
         )
 
@@ -49,7 +49,7 @@ class TestMailMail(TransactionCase):
         expect = mock.MagicMock(), 'email', 'msg'
         with self.assertRaises(EndTestException):
             self.Model._get_unsubscribe_url(*expect)
-        urllib.urlencode.assert_called_once_with(dict(
+        urllib.parse.urlencode.assert_called_once_with(dict(
             db=self.env.cr.dbname,
             res_id=expect[0].res_id,
             email=expect[1],

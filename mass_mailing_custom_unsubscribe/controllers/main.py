@@ -207,7 +207,7 @@ class CustomUnsubscribe(MassMailController):
                 {"error_details_required": True})
 
         # Unsubscribe from additional lists
-        for key, value in post.iteritems():
+        for key, value in post.items():
             try:
                 label, list_id = key.split(",")
                 if label != "list_id":

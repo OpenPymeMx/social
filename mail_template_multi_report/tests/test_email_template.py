@@ -61,7 +61,7 @@ class TestEmailTemplate(common.TransactionCase):
         res = self.env['email.template'].generate_email_batch(
             self.template.id, [self.partner.id])
 
-        self.assertEquals(len(res[self.partner.id]['attachments']), 1)
+        self.assertEqual(len(res[self.partner.id]['attachments']), 1)
 
     def test_02_generate_email_batch_with_standard_report(self):
         self.template.write({
@@ -72,7 +72,7 @@ class TestEmailTemplate(common.TransactionCase):
         res = self.env['email.template'].generate_email_batch(
             self.template.id, [self.partner.id])
 
-        self.assertEquals(len(res[self.partner.id]['attachments']), 2)
+        self.assertEqual(len(res[self.partner.id]['attachments']), 2)
 
     def test_03_report_condition_true(self):
         self.template.report_line_ids[0].write({
@@ -82,7 +82,7 @@ class TestEmailTemplate(common.TransactionCase):
         res = self.env['email.template'].generate_email_batch(
             self.template.id, [self.partner.id])
 
-        self.assertEquals(len(res[self.partner.id]['attachments']), 1)
+        self.assertEqual(len(res[self.partner.id]['attachments']), 1)
 
     def test_04_report_condition_false(self):
         self.template.report_line_ids[0].write({
@@ -93,4 +93,4 @@ class TestEmailTemplate(common.TransactionCase):
             self.template.id, [self.partner.id])
 
         res[self.partner.id].setdefault('attachments', [])
-        self.assertEquals(len(res[self.partner.id]['attachments']), 0)
+        self.assertEqual(len(res[self.partner.id]['attachments']), 0)
